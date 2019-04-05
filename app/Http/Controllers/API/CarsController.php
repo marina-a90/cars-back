@@ -27,7 +27,15 @@ class CarsController extends Controller
      */
     public function store(Request $request)
     {
-        Car::create($request->all());
+        Car::create($request->validate([
+            'brand' => 'string|required|min:2',
+            'model' => 'string|required|min:2',
+            'year' => 'integer|required',
+            'maxSpeed' => 'integer|min:20|max:300',
+            'isAutomatic' => 'integer|required|min:0|max:1',
+            'engine' => 'string|required',
+            'numberOfDoors' => 'integer|required|min:2|max:5'
+        ]));
     }
 
     /**
@@ -51,7 +59,15 @@ class CarsController extends Controller
     public function update(Request $request, $id)
     {
         $car = Car::findOrFail($id);
-        $car->update($request->all());
+        $car->update($request->validate([
+            'brand' => 'string|required|min:2',
+            'model' => 'string|required|min:2',
+            'year' => 'integer|required',
+            'maxSpeed' => 'integer|min:20|max:300',
+            'isAutomatic' => 'integer|required|min:0|max:1',
+            'engine' => 'string|required',
+            'numberOfDoors' => 'integer|required|min:2|max:5'
+        ]));
         return $car;
     }
 
