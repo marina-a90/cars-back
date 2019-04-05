@@ -14,8 +14,19 @@ class CarsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $take = $request->input('take'); 
+        $skip = $request->input('skip'); 
+
+        if ($take || $skip) {
+            if ( !isset($take) ) {
+                echo "<script>";
+                echo "alert('Invalid search parameters');";
+                echo "</script>";
+            }
+            return Car::take($take)->skip($skip)->get();
+        }
         return Car::all();
     }
 
